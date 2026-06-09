@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct TextElement: CardElement {
+struct TextElement: CardElement, Codable {
  
-    let id = UUID()
+    var id = UUID()
  
     var transform = Transform()
  

@@ -9,11 +9,49 @@ import SwiftUI
 
 struct Card: Identifiable {
     
-    let id = UUID()
+    var id = UUID()
     var elements: [any CardElement] = []
+    static var documentsURL: URL {
+        UIImage.documentsDirectory
+    }
+    var filename: String {
+        "\(id.uuidString).json"
+    }
+    
 }
     
-    extension Card {
+extension Card: Codable {
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let isString = try container.decode(String.self, forKey: .id)
+            id = UUID(uuidString: isString) ?? UUID()
+            elements += try container.decode(
+                   [ImageElement].self,
+                forKey: .imageElements
+            )
+        }
+        
+    func save() {
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(self)
+            let url = Self.documentsURL.appendingPathComponent(filename)
+            try data.write(to: url)
+        } catch {
+        print(error)
+    }
+  }
+    
+    static func load(
+        filename: String
+    ) -> Card? {
+        let url = documentsURL.appendingPathComponent(filename)
+        guard let data = try? Data(contentsOf: url) else {
+            return nil
+        }
+        return try? JSONDecoder().decode(Card.self, from: data)
+    }
         
         mutating func update(
         _ element: any CardElement,
@@ -58,5 +96,26 @@ struct Card: Identifiable {
         ) {
             let text = TextElement(text: text)
             elements.append(text)
+        }
+        
+        enum CodingKeys: CodingKey {
+            case id, bacckgroundColor, imageElements, textElements
+        }
+        
+        func encode(
+            to encoder: Encoder
+        ) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(
+                id.uuidString,
+                forKey: .id
+            )
+            let imageElements: [ImageElement] = elements.compactMap {
+                $0 as? ImageElement
+            }
+            try container.encode(
+                imageElements,
+                forKey: .imageElements
+            )
         }
     }

@@ -15,6 +15,8 @@ struct SingleCardView: View {
     @Environment(CardStore.self)
     private var store
     @State private var frameIndex: Int?
+    @Environment(\.scenePhase)
+    private var scenePhase
     
     func isSelected(
         _ element: any CardElement
@@ -102,12 +104,19 @@ struct SingleCardView: View {
                                  self.frameIndex = nil
                              }
                          }
-                    
+                         
                         
                     default:
                         Text(String(describing: item))
                     }
                 }
+        }
+        .onChange(of: scenePhase) {
+            _, newPhase in
+            
+            if newPhase == .inactive {
+                card.save()
+            }
         }
     }
 }

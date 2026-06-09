@@ -6,8 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		22FF5AC62FD76FE200508E15 /* Stickers in Resources */ = {isa = PBXBuildFile; fileRef = 22FF5AC52FD76FE200508E15 /* Stickers */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		22BB43CF2FCDB6AC0085649C /* Chp13_Cards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chp13_Cards.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		22FF5AC52FD76FE200508E15 /* Stickers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Stickers; path = Chp13_Cards/Assets.xcassets/Stickers; sourceTree = "<group>"; };
+		22FF5B3A2FD78AE800508E15 /* Camping */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Camping; path = Chp13_Cards/Assets.xcassets/Stickers/Camping; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +38,8 @@
 		22BB43C62FCDB6AB0085649C = {
 			isa = PBXGroup;
 			children = (
+				22FF5B3A2FD78AE800508E15 /* Camping */,
+				22FF5AC52FD76FE200508E15 /* Stickers */,
 				22BB43D12FCDB6AC0085649C /* Chp13_Cards */,
 				22BB43D02FCDB6AC0085649C /* Products */,
 			);
@@ -109,6 +117,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22FF5AC62FD76FE200508E15 /* Stickers in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +262,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Chp13-Cards-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +294,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Chp13-Cards-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

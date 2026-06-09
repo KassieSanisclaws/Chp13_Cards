@@ -11,7 +11,8 @@ import SwiftUI
 struct Chp13_CardsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+           CardsListView()
+           .environment(CardStore())
         }
     }
 }

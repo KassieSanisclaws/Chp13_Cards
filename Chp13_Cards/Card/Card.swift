@@ -21,7 +21,7 @@ struct Card: Identifiable {
 }
     
 extension Card: Codable {
-        
+    
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let isString = try container.decode(String.self, forKey: .id)

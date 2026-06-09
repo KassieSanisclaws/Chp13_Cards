@@ -33,86 +33,28 @@ extension ImageElement: Codable {
         case transform
         case frameIndex
         case imageFileName
-        case textElements
     }
     
- mutating func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(transform, forKey: .transform)
         try container.encode(frameIndex, forKey: .frameIndex)
-        if imageFileName == nil {
-            imageFileName = UUID().uuidString + ".jpg"
-        }
-        uiImage?.save(
-            filename: imageFileName!
-        )
-        try container.encode(imageFileName, forKey: .imageFileName)
-        let textElements: [TextElement] =
-        elements.compactMap {
-          $0 as? TextElement
+        let fileName = imageFileName ??
+        UUID().uuidString + ".jpg"
+        uiImage?.save(filename: fileName)
+        try container.encode(fileName, forKey: .imageFileName)
      }
-     try container.encode(
-        textElements,
-        forKey: .textElements
-     )
-    }
     
-    init(
-
-        from decoder: Decoder
-
-    ) throws {
+    init(from decoder: Decoder) throws {
      
-        let container =
-
-            try decoder.container(
-
-                keyedBy: CodingKeys.self
-
-            )
+        let container = try decoder.container(keyedBy: CodingKeys.self)
      
-        transform =
-
-            try container.decode(
-
-                Transform.self,
-
-                forKey: .transform
-
-            )
+        transform = try container.decode(Transform.self,forKey: .transform)
      
-        frameIndex =
-
-            try container.decodeIfPresent(
-
-                Int.self,
-
-                forKey: .frameIndex
-
-            )
+        frameIndex = try container.decodeIfPresent(Int.self,forKey: .frameIndex)
      
-        imageFileName =
-
-            try container.decodeIfPresent(
-
-                String.self,
-
-                forKey: .imageFileName
-
-            )
+        imageFileName = try container.decodeIfPresent(String.self,forKey: .imageFileName)
      
-        uiImage =
-
-            UIImage.load(
-
-                filename:
-
-                    imageFileName ?? ""
-
-            )
-        
-        elements += try container.decode([TextElement].self, forKey: .textElements))
-
+        uiImage = UIImage.load(filename: imageFileName ?? "")
     }
-     
 }

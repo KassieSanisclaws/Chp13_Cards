@@ -10,18 +10,24 @@ import SwiftUI
 
 struct CardsListView: View {
     @State private var isPresented = false
+    @Environment(CardStore.self) private var store
+    @State private var selectedCard: Card?
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack {
-                ForEach(0..<10) { _ in
+                ForEach(store.cards) { card in
                     CardThumbnail()
                         .onTapGesture {
-                            isPresented = true
+                            selectedCard = card
                         }
+                }
+         
+                Button("Add") {
+                    selectedCard = store.addCard()
                 }
             }
         }
-        .fullScreenCover(isPresented: $isPresented) {
+        .fullScreenCover(item: $selectedCard) { card in
             SingleCardView()
         }
     }

@@ -12,8 +12,7 @@ struct SingleCardView: View {
     @State private var currentModal: ToolbarSelection?
     @State private var stickerImage: UIImage?
     @State private var card = Card()
-    @Environment(CardStore.self)
-    private var store
+    @Environment(CardStore.self) private var store
     @State private var frameIndex: Int?
     @Environment(\.scenePhase)
     private var scenePhase
@@ -113,8 +112,13 @@ struct SingleCardView: View {
         }
         .onChange(of: scenePhase) {
             _, newPhase in
-            
+         
+            print("Scene Phase:", newPhase)
+         
             if newPhase == .inactive {
+         
+                print("SAVE TRIGGERED")
+         
                 card.save()
             }
         }

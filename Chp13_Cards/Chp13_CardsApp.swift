@@ -9,10 +9,11 @@ import SwiftUI
 
 @main
 struct Chp13_CardsApp: App {
+    @State var store = CardStore()
     var body: some Scene {
         WindowGroup {
            CardsListView()
-           .environment(CardStore())
+           .environment(store)
         }
     }
 }

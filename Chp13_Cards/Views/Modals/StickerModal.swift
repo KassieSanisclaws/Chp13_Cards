@@ -65,8 +65,14 @@ struct StickerModal: View {
                 try? fileManager.contentsOfDirectory(
                     atPath: theme.path)
             {
-                for file in files {
-                    stickerNames.append(theme.path  + "/" + file)
+                for file in files
+                where file.hasSuffix(".png")
+                    || file.hasSuffix(".jpg")
+                    || file.hasSuffix(".jpeg") {
+                 
+                    stickerNames.append(
+                        theme.path + "/" + file
+                    )
                 }
             }
         }

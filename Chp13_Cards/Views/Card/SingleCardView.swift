@@ -53,56 +53,46 @@ struct SingleCardView: View {
     
     var body: some View {
         NavigationStack {
-            content
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button("Done") {
-                            dismiss()
-                        }
-                    }
-                    ToolbarItem(placement: .bottomBar) {
-                        BottomToolbar(
-                            modal: $currentModal,
-                            card: $card
-                        )
-                    }
-                }
+          GeometryReader { proxy in
+              CardDetailView(card: $card, viewScale: Settings.calculateScale(proxy.size))
+                .frame(width: Settings.calculateSize(proxy.size).width, height: Settings.calculateSize(proxy.size).height)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .sheet(item: $currentModal) {
                     item in
                     switch item {
                     case .stickerModal:
-                     
+                        
                         StickerModal(
                             stickerImage: $stickerImage
                         )
                         .onDisappear {
-                     
+                            
                             if let image = stickerImage {
-                     
+                                
                                 card.addElement(
                                     uiImage: image
                                 )
                             }
-                     
+                            
                             stickerImage = nil
                         }
                         
                     case .frameModal:
-                         FrameModal(
+                        FrameModal(
                             frameIndex: $frameIndex
-                            )
-                         .onDisappear {
-                             if let frameIndex,
-                                let selected = store.selectedElement{
-                                    
-                                 card.update(
+                        )
+                        .onDisappear {
+                            if let frameIndex,
+                               let selected = store.selectedElement{
+                                
+                                card.update(
                                     selected,
                                     frameIndex: frameIndex
-                                 )
-                                 self.frameIndex = nil
-                             }
-                         }
-                         
+                                )
+                                self.frameIndex = nil
+                            }
+                        }
+                        
                         
                     default:
                         Text(String(describing: item))
@@ -111,16 +101,17 @@ struct SingleCardView: View {
         }
         .onChange(of: scenePhase) {
             _, newPhase in
-         
+            
             print("Scene Phase:", newPhase)
-         
+            
             if newPhase == .inactive {
-         
+                
                 print("SAVE TRIGGERED")
-         
+                
                 card.save()
             }
         }
+      }
     }
 }
  

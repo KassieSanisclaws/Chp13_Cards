@@ -53,11 +53,17 @@ struct ResizableView: ViewModifier {
                 
                 self.scale = 1.0
             }
+
     }
 }
     
 #Preview {
         RoundedRectangle(cornerRadius: 30)
             .foregroundStyle(.mint)
-//            .resizableView()
+           .resizableView()
     }
+extension View {
+    func resizableView(viewScale: CGFloat = 1.0) -> some View {
+         modifier(ResizableView(viewScale: viewScale))
+    }
+}

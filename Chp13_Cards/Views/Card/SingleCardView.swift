@@ -22,35 +22,6 @@ struct SingleCardView: View {
         store.selectedElement?.id == element.id
     }
     
-    var content: some View {
-        ZStack {
-                ForEach(
-                    Array(card.elements.enumerated()),
-                    id: \.offset
-                ) { _, element in
-                    CardElementView(
-                        element: element
-                    )
-                    .border(
-                        Settings.borderColor,
-                        width: isSelected(element)
-                        ? Settings.borderWidth: 0
-                    )
-                    .resizableView()
-                    .onTapGesture{
-                        store.selectedElement = element
-                    }
-                }
-            }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            store.selectedElement = nil
-        }
-        .onDisappear {
-            store.selectedElement = nil
-        }
-     }
-    
     var body: some View {
         NavigationStack {
           GeometryReader { proxy in

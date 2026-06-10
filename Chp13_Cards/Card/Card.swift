@@ -11,6 +11,7 @@ struct Card: Identifiable {
     
     var id = UUID()
     var elements: [any CardElement] = []
+    var backgroundColor: Color = .white
     static var documentsURL: URL {
         UIImage.documentsDirectory
     }
@@ -21,6 +22,10 @@ struct Card: Identifiable {
 }
     
 extension Card: Codable {
+    
+    enum CodingKeys: CodingKey {
+        case id, backgroundColor, imageElements, textElements
+    }
     
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -96,10 +101,6 @@ extension Card: Codable {
         ) {
             let text = TextElement(text: text)
             elements.append(text)
-        }
-        
-        enum CodingKeys: CodingKey {
-            case id, bacckgroundColor, imageElements, textElements
         }
         
         func encode(

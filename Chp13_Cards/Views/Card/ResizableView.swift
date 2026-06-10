@@ -12,32 +12,23 @@ struct ResizableView: ViewModifier {
     @State private var previousOffset: CGSize = .zero
     @State private var previousRotation: Angle = .zero
     @State private var scale: CGFloat = 1.0
+    let viewScale: CGFloat
+    
     func body(content: Content) -> some View {
-        content
-            .frame(
-                width: transform.size.width,
-                height: transform.size.height
-            )
+     content.frame(
+             width: transform.size.width * viewScale,
+             height: transform.size.height * viewScale)
             .rotationEffect(transform.rotation)
             .scaleEffect(scale)
-            .offset(transform.offset)
+            .offset(x: transform.offset.width * viewScale, y: transform.offset.height * viewScale)
             .gesture(dragGesture)
-            .gesture(
-                SimultaneousGesture(
-                rotationGesture,
-                scaleGesture
-                )
-            )
-    }
+            .gesture(SimultaneousGesture(rotationGesture,scaleGesture))
+      }
     
     var dragGesture: some Gesture {
         DragGesture()
-            .onChanged { value in
-                transform.offset = value.translation + previousOffset
-            }
-            .onEnded { _ in
-                previousOffset = transform.offset
-            }
+            .onChanged { value in transform.offset = value.translation + previousOffset }
+            .onEnded { _ in previousOffset = transform.offset }
     }
     
     var rotationGesture: some Gesture {
@@ -57,22 +48,16 @@ struct ResizableView: ViewModifier {
                 self.scale = scale
             }
             .onEnded { scale in
-              transform.size.width *= scale
-              transform.size.height *= scale
-            
-               self.scale = 1.0
+                transform.size.width *= scale
+                transform.size.height *= scale
+                
+                self.scale = 1.0
             }
     }
 }
-
+    
 #Preview {
-    RoundedRectangle(cornerRadius: 30)
-        .foregroundStyle(.mint)
-        .resizableView()
-}
-
-extension View {
-    func resizableView() -> some View {
-        modifier(ResizableView())
+        RoundedRectangle(cornerRadius: 30)
+            .foregroundStyle(.mint)
+//            .resizableView()
     }
-}

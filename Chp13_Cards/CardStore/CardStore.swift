@@ -9,7 +9,7 @@ import SwiftUI
 
 @Observable
 class CardStore {
-    var selectedElement: (any CardElement)?
+        var selectedElement: (any CardElement)?
         var cards: [Card]
         // MARK: - Init
         init(defaultData: Bool = false) {
@@ -18,9 +18,9 @@ class CardStore {
         // MARK: - Default data (ONLY for first launch / debugging)
         static var initialCards: [Card] {
             [
-                Card(),
-                Card(),
-                Card()
+                Card(backgroundColor: .red),
+                Card(backgroundColor: .green),
+                Card(backgroundColor: .indigo)
             ]
         }
         // MARK: - Load from disk
@@ -39,7 +39,7 @@ class CardStore {
         }
         // MARK: - Add Card (IMPORTANT)
         func addCard() -> Card {
-            let card = Card()
+            let card = Card(backgroundColor: Color.random())
             cards.append(card)
             card.save()
             return card

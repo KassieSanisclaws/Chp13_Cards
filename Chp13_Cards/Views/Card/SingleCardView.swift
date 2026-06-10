@@ -14,8 +14,7 @@ struct SingleCardView: View {
     @State private var card = Card()
     @Environment(CardStore.self) private var store
     @State private var frameIndex: Int?
-    @Environment(\.scenePhase)
-    private var scenePhase
+    @Environment(\.scenePhase) private var scenePhase
     
     func isSelected(
         _ element: any CardElement
